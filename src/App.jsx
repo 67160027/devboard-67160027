@@ -1,12 +1,33 @@
+import { useState } from "react";
 import Navbar from "./componets/Navbar";
 import PostList from "./componets/PostList";
 import UserCard from "./componets/UserCard";
+import AddPostForm from "./componets/AddPostForm";
 
 function App() {
+  const [posts, setPosts] = useState(POSTS);
+  const [favorites,setFavorites] = useState([]);
+  function toggleFavorite(postId) {
+    setFavorites((prev) =>
+      prev.includes(postId)
+        ? prev.filter((id) => id !== postId)
+        : [...prev, postId]
+    );
+  }
+  function handleAddPost({ title, body }) {
+  const newPost = {
+    id: Date.now(),
+    title,
+    body,
+  };
+
+  setPosts((prev) => [newPost, ...prev]);
+  }
+
  return (
   <div>
-    <Navbar />
-
+    <Navbar favoritesCount={favorites.length} />
+    
     <div
       style={{
         maxWidth: "900px",
@@ -19,7 +40,11 @@ function App() {
     >
       {/* คอลัมน์ซ้าย */}
       <div>
-        <PostList posts={POSTS} />
+        <AddPostForm onAddPost={handleAddPost} />
+        <PostList posts={posts}
+        favorites={favorites}
+        onToggleFavorite={toggleFavorite}
+        />
       </div>
 
       {/* คอลัมน์ขวา */}
