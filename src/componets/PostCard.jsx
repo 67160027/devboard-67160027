@@ -1,4 +1,9 @@
-function PostCard({ title, body, isFavorite, onToggleFavorite }) {
+import { useState } from "react";
+import CommentList from "./CommentList";
+
+function PostCard({ post, isFavorite, onToggleFavorite }) {
+  const [showComments, setShowComments] = useState(false);
+
   return (
     <div
       style={{
@@ -9,8 +14,13 @@ function PostCard({ title, body, isFavorite, onToggleFavorite }) {
         background: "white",
       }}
     >
-      <h3 style={{ margin: "0 0 0.5rem", color: "#1e40af" }}>{title}</h3>
-      <p style={{ margin: 0, color: "#4a5568", lineHeight: 1.6 }}>{body}</p>
+      <h3 style={{ margin: "0 0 0.5rem", color: "#1e40af" }}>
+        {post.title}
+      </h3>
+      <p style={{ margin: 0, color: "#4a5568", lineHeight: 1.6 }}>
+        {post.body}
+      </p>
+      
       {/* ปุ่มถูกใจ */}
       <button
         onClick={onToggleFavorite}
@@ -26,7 +36,26 @@ function PostCard({ title, body, isFavorite, onToggleFavorite }) {
       >
         {isFavorite ? "❤️ ถูกใจแล้ว" : "🤍 ถูกใจ"}
       </button>
-    </div>
+      
+      {/* ปุ่มดูความคิดเห็น */}
+        <button
+          onClick={() => setShowComments((prev) => !prev)}
+          style={{
+            background: "none",
+            border: "1px solid #e2e8f0",
+            cursor: "pointer",
+            fontSize: "0.9rem",
+            padding: "0.25rem 0.75rem",
+            borderRadius: "4px",
+            color: "#4a5568",
+          }}
+        >
+          {showComments ? "▲ ซ่อน" : "▼ ดูความคิดเห็น"}
+        </button>
+
+      {/* แสดง comments เมื่อกด — fetch เกิดขึ้นตอนนี้ */}
+      {showComments && <CommentList postId={post.id} />}
+      </div>
   );
 }
 
