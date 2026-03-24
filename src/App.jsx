@@ -1,49 +1,27 @@
-import { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { FavoritesProvider } from "./context/FavoritesContext";
 import Navbar from "./componets/Navbar";
-import UserList from "./componets/UserList";
-import AddPostForm from "./componets/AddPostForm";
-import PostList from "./componets/PostList";
+import HomePage from "./pages/HomePage";
+import PostDetailPage from "./pages/PostDetailPage";
+import ProfilePage from "./pages/ProfilePage";
+import FavoritesPage from "./pages/FavoritesPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
-  const [favorites, setFavorites] = useState([]);
-
-  function handleToggleFavorite(postId) {
-    setFavorites((prev) =>
-      prev.includes(postId)
-        ? prev.filter((id) => id !== postId)
-        : [...prev, postId]
-    );
-  }
-
+  
   return (
-    <div>
-      <Navbar favoritesCount={favorites.length} />
-
-      <div
-        style={{
-          maxWidth: "900px",
-          margin: "2rem auto",
-          padding: "0 1rem",
-          display: "grid",
-          gridTemplateColumns: "2fr 1fr",
-          gap: "2rem",
-        }}
-      >
-        {/* ซ้าย */}
-        <div>
-          <AddPostForm onAddPost={() => {}} />
-          <PostList
-            favorites={favorites}
-            onToggleFavorite={handleToggleFavorite}
-          />
-        </div>
-
-        {/* ขวา */}
-        <div>
-          <UserList />
-        </div>
-      </div>
-    </div>
+    <FavoritesProvider>
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/posts/:id" element={<PostDetailPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/favorites" element={<FavoritesPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </BrowserRouter>
+    </FavoritesProvider>
   );
 }
 
