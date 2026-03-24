@@ -1,5 +1,5 @@
 import PostList from "../components/PostList"
-import AddPostForm from "C:/Users/Nathakorn Inyod/devboard/src/components/AddPostForm"
+import AddPostForm from "../components/AddPostForm";
 
 function HomePage() {
   return (
