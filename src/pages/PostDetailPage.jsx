@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useFavorites } from "../context/FavoritesContext";
-import CommentList from "../componets/CommentList";
-import LoadingSpinner from "../componets/LoadingSpinner";
+import CommentList from "../components/CommentList";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 function PostDetailPage() {
   const { id } = useParams(); // ดึง id จาก URL เช่น /posts/3 → id = "3"

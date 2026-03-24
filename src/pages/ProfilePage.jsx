@@ -1,4 +1,4 @@
-import UserList from "../componets/UserList";
+import UserList from "../components/UserList";
 
 function ProfilePage() {
   return (
